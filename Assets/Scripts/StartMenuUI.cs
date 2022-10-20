@@ -37,17 +37,23 @@ public class StartMenuUI : MonoBehaviour
         {
             if (_saveManager.GetPlayerList().Count > 0)
             {
+                float nameFontSize = bestScoreOverall.fontSize + 5;
+                // Player with the highest score
                 PlayerData bestPlayer = _saveManager.GetPlayerList()[0];
 
-                if (bestPlayer != null)
+                if (AllPlayersHasTheSameScore())
                 {
-                    float nameFontSize = bestScoreOverall.fontSize + 5;
+                    bestScoreOverall.SetText($"<color=#EEE><size={nameFontSize}><b>All Players</b></size></color> have the same best score of <b><i>{bestPlayer.bestScore}</i></b>!");
+                }
+                else
+                {
                     bestScoreOverall.SetText($"<color=#EEE><size={nameFontSize}><b>{bestPlayer.name}</b></size></color> has the highest score of <b><i>{bestPlayer.bestScore}</i></b>!");
                 }
             }
 
             SpawnPlayerItem();
-        }else
+        }
+        else
         {
             bestScoreOverall.SetText(string.Empty);
         }
@@ -94,6 +100,24 @@ public class StartMenuUI : MonoBehaviour
             playerItem.Setup(player, i);
             playerItem.OnClicked += StartGameWithSelectedPlayer;
         }
+    }
+
+    private bool AllPlayersHasTheSameScore()
+    {
+        List<PlayerData> playerList = _saveManager.GetPlayerList();
+
+        for (int i = 0, l = playerList.Count; i < l; i++)
+        {
+            for (int j = 0; j < l; j++)
+            {
+                // If current(i) player's best score is not equal to other(j) player's
+                if (playerList[i].bestScore != playerList[j].bestScore)
+                    return false;
+            }
+        }
+
+        // All player has the same score
+        return true;
     }
 
     public void ViewLeaderboard()

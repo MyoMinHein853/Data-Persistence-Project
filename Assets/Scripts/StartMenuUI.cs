@@ -10,6 +10,7 @@ public class StartMenuUI : MonoBehaviour
     public static StartMenuUI Instance { get; private set; }
 
     [SerializeField] private TMP_InputField newPlayerNameInput;
+    [SerializeField] private TMP_Text bestScoreOverall;
     [SerializeField] private GameObject playerItemPrefab;
     [SerializeField] private Transform container;
 
@@ -34,6 +35,17 @@ public class StartMenuUI : MonoBehaviour
 
         if (_saveManager.LoadAllPlayer())
         {
+            if (_saveManager.GetPlayerList().Count > 0)
+            {
+                PlayerData bestPlayer = _saveManager.GetPlayerList()[0];
+
+                if (bestPlayer != null)
+                {
+                    float nameFontSize = bestScoreOverall.fontSize + 10;
+                    bestScoreOverall.SetText($"<color=#EEE><size={nameFontSize}><b>{bestPlayer.name}</b></size></color> has the highest score of <b><i>{bestPlayer.bestScore}</i></b>!");
+                }
+            }
+
             SpawnPlayerItem();
         }
     }
@@ -64,12 +76,12 @@ public class StartMenuUI : MonoBehaviour
 
     private void SpawnPlayerItem()
     {
-        if (_saveManager.GetPlayerList() == null) 
+        if (_saveManager.GetPlayerList() == null)
         {
             Debug.LogWarning("Players in SaveManager are null");
             return;
         }
-        
+
         for (int i = 0; i < _saveManager.GetPlayerList().Count; i++)
         {
             PlayerData player = _saveManager.GetPlayerList()[i];
@@ -99,7 +111,7 @@ public class StartMenuUI : MonoBehaviour
 
     private void DestroyAllPlayerItems()
     {
-        for(int i = 0; i < container.childCount; i++)
+        for (int i = 0; i < container.childCount; i++)
         {
             Destroy(container.GetChild(i).gameObject);
         }

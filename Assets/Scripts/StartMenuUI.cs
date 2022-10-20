@@ -47,6 +47,9 @@ public class StartMenuUI : MonoBehaviour
             }
 
             SpawnPlayerItem();
+        }else
+        {
+            bestScoreOverall.SetText(string.Empty);
         }
     }
 

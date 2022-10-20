@@ -106,6 +106,9 @@ public class StartMenuUI : MonoBehaviour
     {
         List<PlayerData> playerList = _saveManager.GetPlayerList();
 
+        if (playerList.Count < 2)
+            return false;
+
         for (int i = 0, l = playerList.Count; i < l; i++)
         {
             for (int j = 0; j < l; j++)

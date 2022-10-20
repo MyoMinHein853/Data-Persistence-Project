@@ -41,7 +41,7 @@ public class StartMenuUI : MonoBehaviour
 
                 if (bestPlayer != null)
                 {
-                    float nameFontSize = bestScoreOverall.fontSize + 10;
+                    float nameFontSize = bestScoreOverall.fontSize + 5;
                     bestScoreOverall.SetText($"<color=#EEE><size={nameFontSize}><b>{bestPlayer.name}</b></size></color> has the highest score of <b><i>{bestPlayer.bestScore}</i></b>!");
                 }
             }

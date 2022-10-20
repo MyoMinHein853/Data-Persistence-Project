@@ -69,6 +69,12 @@ public class SaveManager : MonoBehaviour
             var json = File.ReadAllText(PATH);
             allPlayers = JsonUtility.FromJson<AllPlayers>(json);
             allPlayers ??= new AllPlayers();
+
+            if (allPlayers.PlayerList.Count == 0)
+            {
+                return false;
+            }
+
             return true;
         }
         else
